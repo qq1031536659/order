@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-1.11.0.js"></script>
+    <style>
+        table{
+            border-collapse:collapse;
+            margin: 0 auto;
+        }
+        button{
+            text-align: left;
+            background: skyblue;
+            height: 27px;
+            border: none;
+            outline: none;
+            width: 150px;
+        }
+        th{
+            padding: 0;
+            text-align: left;
+            background: skyblue;
+            width: 150px;
+        }
+        td{
+            text-align: center;
+        }
+        tr:nth-of-type(2){
+            background: yellowgreen;
+        }
+        tr:nth-last-of-type(1){
+            background: pink;
+        }
+        .w150{
+            width: 150px;
+        }
+    </style>
+</head>
+<body ng-app="app">
+<div ng-controller="con">
+    <div style="margin: 0 auto;width: 210px">查询:<input type="text" ng-model="str"></div>
+    <table border="1">
+        <tr>
+            <th>索引</th>
+            <!--<th ng-repeat="v in headerData" ng-click="fn(v.condition);isDesc=!isDesc">{{v.title}}</th>-->
+            <th><button ng-click="condition='name';isDesc=!isDesc">姓名</button></th>
+            <th><button ng-click="condition='sex';isDesc=!isDesc">性别</button></th>
+            <th><button ng-click="condition='age';isDesc=!isDesc">年龄</button></th>
+            <th><button ng-click="condition='weight';isDesc=!isDesc">体重</button></th>
+            <th><button ng-click="condition='height';isDesc=!isDesc">身高</button></th>
+        </tr>
+        <tr ng-repeat="v in data | orderBy:condition:isDesc | filter:str">
+            <td>{{$index}}</td>
+            <td>{{v.name}}</td>
+            <td>{{v.sex}}</td>
+            <td>{{v.age}}</td>
+            <td>{{v.weight}}</td>
+            <td>{{v.height}}</td>
+        </tr>
+    </table>
+</div>
+<script src="js/angular.js"></script>
+<script type="text/javascript">
+    var app = angular.module('app',[]);
+    app.controller('con',function ($scope) {
+        $scope.condition = 'height';
+        $scope.isDesc = true;
+        // $scope.fn = function(v){
+        //     $scope.condition = v;
+        // };
+        $scope.str = '';
+        $scope.data = [
+            { name: '小明', sex: '男', age: 20, weight: 80 ,height: 180},
+            { name: '小芳', sex: '女', age: 19, weight: 44 ,height: 179},
+            { name: '小绿', sex: '男', age: 25, weight: 44 ,height: 160},
+            { name: '小黄', sex: '男', age: 22, weight: 44 ,height: 150},
+            { name: '大黄', sex: '女', age: 29, weight: 44 ,height: 185},
+            { name: '小刚', sex: '男', age: 21, weight: 50 ,height: 177},
+            { name: '小红', sex: '女', age: 18, weight: 60 ,height: 164},
+            { name: '小兰', sex: '女', age: 22, weight: 55 ,height: 160}
+        ];
+        $scope.headerData = [
+            {condition:'name',title:'姓名'},
+            {condition:'sex',title:'性别'},
+            {condition:'age',title:'年龄'},
+            {condition:'weight',title:'体重'},
+            {condition:'height',title:'身高'}
+        ];
+    })
+</script>
+</body>
+</html>
